@@ -23,7 +23,7 @@
 #include <cstdint>
 #include <stdexcept>
 
-class fixedBitMap final
+class fixedIdset final
 {
     // three types of id block
     // 1. single id block, takes only 1 word: [singleId]
@@ -37,10 +37,10 @@ class fixedBitMap final
         std::vector<uint64_t> m_idBuf;
 
     public:
-        fixedBitMap() = default;
+        fixedIdset() = default;
 
     public:
-        template<typename forwardCIterator> fixedBitMap(forwardCIterator ibegin, forwardCIterator iend)
+        template<typename forwardCIterator> fixedIdset(forwardCIterator ibegin, forwardCIterator iend)
         {
             push(*(ibegin++));
             for(auto p = ibegin; p != iend; ++p){
@@ -49,7 +49,7 @@ class fixedBitMap final
         }
 
     public:
-        ~fixedBitMap() = default;
+        ~fixedIdset() = default;
 
     public:
         size_t count() const
@@ -72,7 +72,7 @@ class fixedBitMap final
             }
 
             if(m_idBuf[m_idOff.back()] >= id){
-                throw std::invalid_argument(std::string("fixedBitMap::push(") + std::to_string(id) + "): id is not in ascending order");
+                throw std::invalid_argument(std::string("fixedIdset::push(") + std::to_string(id) + "): id is not in ascending order");
             }
 
             // TODO
